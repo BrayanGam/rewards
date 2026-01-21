@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --color-peony-light: #FFF5F5;
+  --color-burgundy: #630330;
+  --color-burgundy-dark: #4a0224;
+  --radius-3xl: 24px;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: Inter, sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  @apply bg-peony-light font-sans text-gray-800;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-serif;
+}
+
+.btn-primary {
+  @apply bg-burgundy text-white px-6 py-3 rounded-3xl font-medium transition-all duration-300 hover:scale-105 hover:bg-burgundy-dark active:scale-95 flex items-center justify-center gap-2;
+}
+
+.card {
+  @apply bg-white rounded-3xl shadow-sm p-6 border border-pink-50;
+}
+
+.glass {
+  @apply bg-white/60 backdrop-blur-xl border border-white/50 rounded-[28px] shadow-xl;
+}
