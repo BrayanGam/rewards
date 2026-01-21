@@ -31,6 +31,18 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
+        path: '/game/puzzle',
+        name: 'SlidingPuzzle',
+        component: () => import('../views/SlidingPuzzle.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/game/puzzle-gallery',
+        name: 'PuzzleGallery',
+        component: () => import('../views/PuzzleGallery.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/cupones',
         name: 'Coupons',
         component: () => import('../views/Coupons.vue'),

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { supabase } from '../supabase';
-import { Gift, Gamepad2, Heart, Award, ChevronRight, Brain } from 'lucide-vue-next';
+import { Gift, Gamepad2, Heart, Award, ChevronRight, Brain, Sparkles } from 'lucide-vue-next';
 
 import { getWeeklyRewardCount, getNextResetDate } from '../gameLogic';
 
@@ -131,6 +131,43 @@ onMounted(async () => {
           <ChevronRight v-if="canPlay" class="text-gray-300 group-hover:text-burgundy transition-colors" :size="20" />
           <Heart v-else class="text-gray-200" :size="20" />
         </component>
+
+        <!-- Daily Puzzle -->
+        <component 
+          :is="canPlay ? 'router-link' : 'div'"
+          to="/game/puzzle" 
+          class="w-full card flex items-center justify-between group transition-all"
+          :class="canPlay ? 'hover:border-burgundy/20 cursor-pointer' : 'opacity-75 grayscale cursor-not-allowed'"
+        >
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center transition-colors" :class="canPlay ? 'bg-pink-100 text-burgundy' : 'bg-gray-100 text-gray-400'">
+              <Award :size="24" />
+            </div>
+            <div class="text-left">
+              <h3 class="font-bold transition-colors" :class="canPlay ? 'text-gray-900' : 'text-gray-400'">Desafío BTS</h3>
+              <p class="text-xs text-gray-500">{{ canPlay ? 'Gana premios con tus idols 💜' : 'Límite alcanzado' }}</p>
+            </div>
+          </div>
+          <ChevronRight v-if="canPlay" class="text-gray-300 group-hover:text-burgundy transition-colors" :size="20" />
+          <Heart v-else class="text-gray-200" :size="20" />
+        </component>
+
+        <!-- Puzzle Gallery (Infinite) -->
+        <router-link 
+          to="/game/puzzle-gallery" 
+          class="w-full card flex items-center justify-between group transition-all hover:border-burgundy/20 cursor-pointer"
+        >
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-burgundy flex items-center justify-center transition-colors">
+              <Gamepad2 :size="24" />
+            </div>
+            <div class="text-left">
+              <h3 class="font-bold text-gray-900">Galería de tus Recuerdos</h3>
+              <p class="text-xs text-gray-500">Resuelvelo solo si puedes</p>
+            </div>
+          </div>
+          <ChevronRight class="text-gray-300 group-hover:text-burgundy transition-colors" :size="20" />
+        </router-link>
       </div>
     </section>
 
@@ -143,7 +180,7 @@ onMounted(async () => {
         <div class="flex justify-between items-start">
           <div class="space-y-1">
             <h3 class="text-xl font-bold font-serif tracking-tight">Cofre Semanal</h3>
-            <p v-if="canPlay" class="text-white/70 text-xs font-medium">Desbloquea premios jugando ✨</p>
+            <p v-if="canPlay" class="text-white/70 text-xs font-medium">Desbloquea premios jugando</p>
             <p v-else class="text-white/70 text-[10px] font-bold uppercase tracking-widest">Reinicia en: {{ countdown }}</p>
           </div>
           <Award class="text-white/30" :size="32" />

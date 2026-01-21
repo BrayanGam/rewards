@@ -117,7 +117,7 @@ onMounted(async () => {
     <div class="space-y-4">
       <router-link to="/admin" class="w-full glass flex items-center gap-4 py-5 px-6 text-burgundy hover:bg-white/90 transition-all active:scale-[0.98]">
         <Heart :size="20" class="flex-shrink-0" />
-        <span class="font-bold text-sm tracking-tight text-gray-800">Mensaje Especial (Admin)</span>
+        <span class="font-bold text-sm tracking-tight text-gray-800">Mensaje Inicial</span>
       </router-link>
       
       <button @click="handleLogout" class="w-full glass flex items-center gap-4 py-5 px-6 text-red-500 hover:bg-red-50/20 transition-all active:scale-[0.98] border-red-500/10">
