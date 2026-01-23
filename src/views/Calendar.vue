@@ -9,7 +9,7 @@ const showModal = ref(false);
 const showDeleteConfirm = ref(false);
 const editingActivity = ref(null);
 
-// Form data
+// Datos del formulario
 const form = ref({
   title: '',
   description: '',
@@ -43,7 +43,7 @@ const weekDays = computed(() => {
   const start = new Date(currentWeekStart.value);
   start.setHours(0, 0, 0, 0);
   
-  // Get Monday of the week
+  // Obtener el lunes de la semana
   const day = start.getDay();
   const diff = start.getDate() - day + (day === 0 ? -6 : 1);
   start.setDate(diff);
@@ -76,7 +76,7 @@ const currentTimePosition = computed(() => {
   if (hours < 6 || hours > 23) return null;
   
   const totalMinutes = (hours - 6) * 60 + minutes;
-  const totalSlots = 18 * 60; // 6am to 12am = 18 hours
+  const totalSlots = 18 * 60; // 6am a 12am = 18 horas
   return (totalMinutes / totalSlots) * 100;
 });
 
@@ -195,7 +195,7 @@ const saveActivity = async () => {
   };
   
   if (editingActivity.value) {
-    // Update existing activity
+    // Actualizar actividad existente
     const { error } = await supabase
       .from('activities')
       .update(activityData)
@@ -207,7 +207,7 @@ const saveActivity = async () => {
       return;
     }
   } else {
-    // Create new activity
+    // Crear nueva actividad
     const { error } = await supabase
       .from('activities')
       .insert([activityData]);
@@ -272,7 +272,7 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen bg-gray-50 pb-20">
-    <!-- Header -->
+    <!-- Encabezado -->
     <div class="bg-white border-b border-gray-200 sticky top-0 z-30">
       <div class="max-w-7xl mx-auto px-4 py-2">
         <div class="flex items-center justify-between">
@@ -294,10 +294,10 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Calendar Grid -->
+    <!-- Cuadrícula del Calendario -->
     <div class="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-6">
       <div class="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-200 overflow-x-auto">
-        <!-- Days Header -->
+        <!-- Encabezado de Días -->
         <div class="grid grid-cols-8 border-b border-gray-200 min-w-[640px]">
           <div class="p-2 border-r border-gray-200"></div>
           <div 
@@ -315,10 +315,10 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Time Grid -->
+        <!-- Cuadrícula de Horarios -->
         <div class="relative min-w-[640px]">
           <div class="grid grid-cols-8">
-            <!-- Time Labels -->
+            <!-- Etiquetas de Hora -->
             <div class="border-r border-gray-200">
               <div 
                 v-for="time in timeSlots" 
@@ -329,13 +329,13 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- Day Columns -->
+            <!-- Columnas de Días -->
             <div 
               v-for="day in weekDays" 
               :key="day.date.toISOString()"
               class="relative border-r border-gray-200 last:border-r-0"
             >
-              <!-- Time Slots -->
+              <!-- Franjas Horarias -->
               <div 
                 v-for="time in timeSlots" 
                 :key="time"
@@ -343,7 +343,7 @@ onMounted(() => {
                 @click="openCreateModal(day.date, time)"
               ></div>
 
-              <!-- Activities -->
+              <!-- Actividades -->
               <div class="absolute inset-0 pointer-events-none">
                 <div 
                   v-for="activity in getActivitiesForDay(day.date)" 
@@ -357,7 +357,7 @@ onMounted(() => {
                 </div>
               </div>
 
-              <!-- Current Time Indicator -->
+              <!-- Indicador de Hora Actual -->
               <div 
                 v-if="day.isToday && currentTimePosition !== null"
                 class="absolute left-0 right-0 pointer-events-none z-20"
@@ -374,7 +374,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Activity Modal -->
+    <!-- Modal de Actividad -->
     <div 
       v-if="showModal"
       class="fixed inset-0 bg-black/50 z-[60] flex items-end sm:items-center justify-center"
@@ -486,7 +486,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
+    <!-- Modal de Confirmación de Eliminación -->
     <div 
       v-if="showDeleteConfirm"
       class="fixed inset-0 bg-black/50 z-[70] flex items-center justify-center p-4"

@@ -65,11 +65,11 @@ onMounted(async () => {
 <template>
   <div class="p-4 sm:p-6 space-y-6 sm:space-y-8 max-w-lg mx-auto pb-24">
     <div class="text-center space-y-3 sm:space-y-4">
-      <div class="w-28 h-28 sm:w-32 sm:h-32 bg-pink-50 rounded-full mx-auto flex items-center justify-center border-4 border-white shadow-sm overflow-hidden relative p-1.5">
+      <div class="w-32 h-40 sm:w-36 sm:h-44 bg-pink-50 rounded-[2rem] mx-auto flex items-center justify-center border-4 border-white shadow-sm overflow-hidden relative p-1">
         <img 
           src="https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image13.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxMy5qcGVnIiwiaWF0IjoxNzY5MDE5NjE3LCJleHAiOjQ5MjI2MTk2MTd9.YU6x_3uRIL4_OshS0WaTwDuiMaqH2R1iRns9VMwx_yc" 
           alt="Foto de perfil"
-          class="w-full h-full object-cover rounded-full"
+          class="w-full h-full object-cover rounded-[1.8rem]"
         />
       </div>
       <div>
