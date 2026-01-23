@@ -35,3 +35,29 @@ h6 {
 .glass {
   @apply bg-white/60 backdrop-blur-xl border border-white/50 rounded-[20px] sm:rounded-[28px] shadow-xl;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #630330;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a0224;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #630330 #f1f1f1;
+}
