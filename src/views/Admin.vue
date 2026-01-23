@@ -34,9 +34,9 @@ const saveMessage = async () => {
 </script>
 
 <template>
-  <div class="p-6 space-y-6 max-w-lg mx-auto">
+  <div class="p-4 sm:p-6 space-y-4 sm:space-y-6 max-w-lg mx-auto">
     <header>
-      <h1 class="text-3xl font-bold text-gray-900 font-serif">Panel de Control</h1>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 font-serif">Panel de Control</h1>
       <p class="text-gray-500">Configura el mensaje del inicio.</p>
     </header>
 

@@ -64,17 +64,17 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-6 space-y-8 max-w-lg mx-auto">
+  <div class="p-4 sm:p-6 space-y-6 sm:space-y-8 max-w-lg mx-auto">
     <!-- Header/Greeting -->
     <header class="space-y-2">
-      <p class="text-gray-500 font-medium">Hola, mi vida ✨</p>
-      <h1 class="text-3xl font-bold text-gray-900 leading-tight">
+      <p class="text-sm sm:text-base text-gray-500 font-medium">Hola, mi vida ✨</p>
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
         {{ profile?.special_message || '¡Qué alegría verte de nuevo!' }}
       </h1>
     </header>
 
     <!-- Stats Preview -->
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-2 gap-3 sm:gap-4">
       <div class="card flex flex-col items-center text-center space-y-1 bg-pink-50/50">
         <Heart class="text-burgundy fill-burgundy mb-2" :size="20" />
         <span class="text-sm text-gray-500">Días Juntos</span>

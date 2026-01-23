@@ -25,13 +25,13 @@ h6 {
 }
 
 .btn-primary {
-  @apply bg-burgundy text-white px-6 py-3 rounded-3xl font-medium transition-all duration-300 hover:scale-105 hover:bg-burgundy-dark active:scale-95 flex items-center justify-center gap-2;
+  @apply bg-burgundy text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-3xl font-medium transition-all duration-300 hover:scale-105 hover:bg-burgundy-dark active:scale-95 flex items-center justify-center gap-2;
 }
 
 .card {
-  @apply bg-white rounded-3xl shadow-sm p-6 border border-pink-50;
+  @apply bg-white rounded-2xl sm:rounded-3xl shadow-sm p-4 sm:p-6 border border-pink-50;
 }
 
 .glass {
-  @apply bg-white/60 backdrop-blur-xl border border-white/50 rounded-[28px] shadow-xl;
+  @apply bg-white/60 backdrop-blur-xl border border-white/50 rounded-[20px] sm:rounded-[28px] shadow-xl;
 }

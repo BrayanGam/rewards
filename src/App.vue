@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router';
 import { supabase } from './supabase';
 import { onMounted, ref } from 'vue';
-import { Heart, Wallet, User, Home as HomeIcon } from 'lucide-vue-next';
+import { Heart, Wallet, User, Home as HomeIcon, Calendar } from 'lucide-vue-next';
 
 const router = useRouter();
 const session = ref(null);
@@ -39,6 +39,11 @@ onMounted(async () => {
         <router-link to="/cupones" class="nav-item" active-class="nav-item-active">
           <Wallet :size="24" />
           <span class="text-[10px] font-bold uppercase tracking-tighter">Cupones</span>
+        </router-link>
+
+        <router-link to="/calendario" class="nav-item" active-class="nav-item-active">
+          <Calendar :size="24" />
+          <span class="text-[10px] font-bold uppercase tracking-tighter">Agenda</span>
         </router-link>
 
         <router-link to="/perfil" class="nav-item" active-class="nav-item-active">
