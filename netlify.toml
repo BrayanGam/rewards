@@ -1,0 +1,21 @@
+[build]
+  # Directory to change to before starting a build
+  base = "."
+  
+  # Directory that contains the deploy-ready HTML files and assets
+  publish = "dist"
+  
+  # Default build command
+  command = "npm run build"
+
+[[redirects]]
+  # Redirect all routes to index.html for SPA routing
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  # Cache static assets
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
