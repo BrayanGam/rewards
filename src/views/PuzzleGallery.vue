@@ -20,11 +20,12 @@ const fetchRandomImage = async () => {
             .from('puzzle_gallery')
             .select('*');
 
+        // Using your uploaded images from Supabase as fallback
         const romanticImages = [
-            'https://images.unsplash.com/photo-1518199266791-739d6ffc8ec1?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1516589174184-c68526671ee6?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1522673607200-164848374c0f?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?q=80&w=1000&auto=format&fit=crop'
+            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image1.jpeg',
+            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image5.jpeg',
+            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image10.jpeg',
+            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image15.jpeg'
         ];
 
         if (error || !data || data.length === 0) {
