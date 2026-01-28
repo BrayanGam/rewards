@@ -79,4 +79,14 @@ onMounted(async () => {
 .nav-item:active {
   @apply scale-95;
 }
+
+@media print {
+  .fixed.bottom-0 {
+    display: none !important;
+  }
+  
+  .pb-20 {
+    padding-bottom: 0 !important;
+  }
+}
 </style>
