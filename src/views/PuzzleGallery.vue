@@ -12,42 +12,58 @@ const gridSize = ref(4); // Fixed 4x4 for Memories
 const tiles = ref([]);
 const isWon = ref(false);
 
-const fetchRandomImage = async () => {
+const fetchRandomImage = async (retryCount = 0) => {
+    if (retryCount > 3) {
+        alert('No se pudieron cargar las imágenes. Por favor revisa tu conexión.');
+        loading.value = false;
+        return;
+    }
+
     loading.value = true;
     isWon.value = false;
+    
     try {
         const { data, error } = await supabase
             .from('puzzle_gallery')
             .select('*');
 
         // Using your uploaded images from Supabase as fallback
+        // ONLY PUBLIC URLs
         const romanticImages = [
             'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image1.jpeg',
             'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image5.jpeg',
             'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image10.jpeg',
-            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image15.jpeg',
-            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image12.jpeg?',
-            "https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image18.jpeg?"
+            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image15.jpeg'
         ];
 
+        let selectedImage = null;
+
         if (error || !data || data.length === 0) {
-            // Fallback Romantic images if none in DB
             const randomIndex = Math.floor(Math.random() * romanticImages.length);
-            currentImage.value = {
-                image_url: romanticImages[randomIndex]
-            };
+            selectedImage = { image_url: romanticImages[randomIndex] };
         } else {
             const randomIndex = Math.floor(Math.random() * data.length);
-            currentImage.value = data[randomIndex];
+            selectedImage = data[randomIndex];
         }
+
+        currentImage.value = selectedImage;
         
         // Preload image before starting game
         await preloadImage(currentImage.value.image_url);
         initGame();
+        
     } catch (e) {
-        console.error(e);
+        console.error("Error loading image, retrying...", e);
+        // Retry with a delay to avoid hammering
+        setTimeout(() => {
+            fetchRandomImage(retryCount + 1);
+        }, 1000);
     } finally {
-        loading.value = false;
+        if (retryCount === 0 && !currentImage.value) {
+           // Keep loading if we are retrying
+        } else if (currentImage.value) {
+           loading.value = false;
+        }
     }
 };
 
