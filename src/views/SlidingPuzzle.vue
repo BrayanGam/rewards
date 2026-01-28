@@ -62,25 +62,29 @@ const fetchChallenge = async () => {
 };
 
 const initGame = () => {
-    tiles.value = [...solvedState.value];
-    shuffle();
+    if (!challenge.value) return; // Safety check
+    // Create a local copy for manipulation
+    const startState = Array.from({ length: gridSize.value * gridSize.value }, (_, i) => i);
+    tiles.value = shuffle(startState);
     gameStatus.value = 'playing';
 };
 
-const shuffle = () => {
-    // To guarantee solvability, we perform valid random moves from the solved state
+const shuffle = (initialState) => {
+    // Work with a local copy to avoid reactivity overhead during generation
+    const tempTiles = [...initialState];
     const size = gridSize.value;
-    let currentEmptyIndex = tiles.value.indexOf(size * size - 1);
+    let currentEmptyIndex = tempTiles.indexOf(size * size - 1);
     const moves = 100 * (size - 2); 
 
     for (let i = 0; i < moves; i++) {
         const possibleMoves = getValidMoves(currentEmptyIndex);
         const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
         
-        // Swap
-        [tiles.value[currentEmptyIndex], tiles.value[randomMove]] = [tiles.value[randomMove], tiles.value[currentEmptyIndex]];
+        // Swap in local array
+        [tempTiles[currentEmptyIndex], tempTiles[randomMove]] = [tempTiles[randomMove], tempTiles[currentEmptyIndex]];
         currentEmptyIndex = randomMove;
     }
+    return tempTiles; // Return the final shuffled array
 };
 
 const getValidMoves = (emptyIndex) => {
@@ -238,7 +242,7 @@ onMounted(fetchChallenge);
               v-if="tile !== gridSize * gridSize - 1"
               class="w-full h-full bg-cover"
               :style="{ 
-                backgroundImage: `url(${challenge.image_url})`,
+                backgroundImage: `url('${challenge.image_url}')`,
                 backgroundPosition: getBackgroundPosition(tile),
                 backgroundSize: `${gridSize * 100}% ${gridSize * 100}%`
               }"

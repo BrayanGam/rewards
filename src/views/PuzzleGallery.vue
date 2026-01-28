@@ -25,7 +25,9 @@ const fetchRandomImage = async () => {
             'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image1.jpeg',
             'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image5.jpeg',
             'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image10.jpeg',
-            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image15.jpeg'
+            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image15.jpeg',
+            'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image12.jpeg?',
+            "https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image18.jpeg?"
         ];
 
         if (error || !data || data.length === 0) {
