@@ -522,7 +522,84 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
 .grid-cols-8 {
   grid-template-columns: 80px repeat(7, 1fr);
+}
+
+@media print {
+  @page {
+    margin: 0.5cm;
+    size: landscape;
+  }
+
+  /* Hide headers, navigation, and controls not needed for print */
+  button, 
+  .sticky, 
+  [aria-label="Encabezado"],
+  .fixed,
+  /* Hide the main sidebar or external layout elements if they exist globally */
+  nav, 
+  header {
+    display: none !important;
+  }
+
+  /* Reset main container styles */
+  .min-h-screen {
+    min-height: auto !important;
+    padding-bottom: 0 !important;
+    background-color: white !important;
+  }
+
+  /* Ensure calendar takes full width/height */
+  .max-w-7xl,
+  .bg-white {
+    max-width: none !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Handle scroll containers */
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+
+  .min-w-\[640px\] {
+    min-width: auto !important;
+  }
+
+  /* Adjust grid for print */
+  .grid-cols-8 {
+    display: grid !important;
+    grid-template-columns: 60px repeat(7, 1fr) !important; /* Smaller time column */
+    width: 100% !important;
+  }
+
+  /* Typography adjustments for print */
+  body {
+    font-size: 10pt;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .text-\[10px\], .text-xs, .text-sm, .text-base, .text-xl, .text-2xl {
+    /* Normalize text sizes for print */
+  }
+
+  /* Ensure activities look good */
+  .absolute.rounded-lg {
+    box-shadow: none !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+  }
+
+  /* Force background colors */
+  * {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
 }
 </style>

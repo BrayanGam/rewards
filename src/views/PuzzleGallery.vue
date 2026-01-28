@@ -40,6 +40,9 @@ const fetchRandomImage = async () => {
             const randomIndex = Math.floor(Math.random() * data.length);
             currentImage.value = data[randomIndex];
         }
+        
+        // Preload image before starting game
+        await preloadImage(currentImage.value.image_url);
         initGame();
     } catch (e) {
         console.error(e);
@@ -48,23 +51,34 @@ const fetchRandomImage = async () => {
     }
 };
 
-const initGame = () => {
-    const totalTiles = gridSize.value * gridSize.value;
-    tiles.value = Array.from({ length: totalTiles }, (_, i) => i);
-    shuffle();
+const preloadImage = (url) => {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = resolve;
+        img.onerror = reject;
+    });
 };
 
-const shuffle = () => {
-    let emptyIndex = tiles.value.indexOf(tiles.value.length - 1);
+const initGame = () => {
+    const totalTiles = gridSize.value * gridSize.value;
+    const startState = Array.from({ length: totalTiles }, (_, i) => i);
+    tiles.value = shuffle(startState);
+};
+
+const shuffle = (initialState) => {
+    const tempTiles = [...initialState];
+    let emptyIndex = tempTiles.indexOf(tempTiles.length - 1);
     const moves = 100 * (gridSize.value - 2); // More moves for harder grids
 
     for (let i = 0; i < moves; i++) {
         const possibleMoves = getValidMoves(emptyIndex);
         const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
         
-        [tiles.value[emptyIndex], tiles.value[randomMove]] = [tiles.value[randomMove], tiles.value[emptyIndex]];
+        [tempTiles[emptyIndex], tempTiles[randomMove]] = [tempTiles[randomMove], tempTiles[emptyIndex]];
         emptyIndex = randomMove;
     }
+    return tempTiles;
 };
 
 const getValidMoves = (idx) => {
@@ -163,7 +177,7 @@ onMounted(fetchRandomImage);
               v-if="tile !== gridSize * gridSize - 1"
               class="w-full h-full bg-cover"
               :style="{ 
-                backgroundImage: `url(${currentImage.image_url})`,
+                backgroundImage: `url('${currentImage.image_url}')`,
                 backgroundPosition: getBackgroundPosition(tile),
                 backgroundSize: `${gridSize * 100}% ${gridSize * 100}%`
               }"
