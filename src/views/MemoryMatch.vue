@@ -20,26 +20,26 @@ const showChests = ref(false);
 const timeLeft = ref(300);
 let timerInterval;
 
-// Photos Configuration (18 photos provided by user)
+// Photos Configuration (18 photos - using public URLs)
 const photoPool = [
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image1.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxLmpwZWciLCJpYXQiOjE3NjkwMjEzNTQsImV4cCI6NDkyMjYyMTM1NH0.ITXF4MdSPiiUJNO1x7p_647bfg_1S6NCt9C90aFKdc4',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image10.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxMC5qcGVnIiwiaWF0IjoxNzY5MDIxMzg0LCJleHAiOjQ5MjI2MjEzODR9.lVedOz_-bz5TCoRVY_ggLXSATKfSIggyszBNtfNuZ04',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image11.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxMS5qcGVnIiwiaWF0IjoxNzY5MDIxNDA4LCJleHAiOjQ5MjI2MjE0MDh9.exYUrOmmlKHE_sh2fSISb6I3ChfRW3niwrqbz38xsRA',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image12.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxMi5qcGVnIiwiaWF0IjoxNzY5MDIxNDQ4LCJleHAiOjQ5MjI2MjE0NDh9.3MUuaylC34fzrPbOtd9sXwHcdv7e_UAXwlm0kKz_sj0',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image14.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxNC5qcGVnIiwiaWF0IjoxNzY5MDIxNDYzLCJleHAiOjQ5MjI2MjE0NjN9.bM6tZj-DUyyw2gMeEleqAfCOm_Ykul2DwGHiJXaiyvg',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image15.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxNS5qcGVnIiwiaWF0IjoxNzY5MDIxNDgxLCJleHAiOjQ5MjI2MjE0ODF9.BQJE0XjZHEd2aGzJTdDxU_AAEXFxrbgONhYT_YSBZZQ',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image16.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxNi5qcGVnIiwiaWF0IjoxNzY5MDIxNTcxLCJleHAiOjQ5MjI2MjE1NzF9.hLgjKjTEz8_nfYkXXkUqdMaFbjiRoxJfRY2dsnkAOZ0',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image17.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxNy5qcGVnIiwiaWF0IjoxNzY5MDIxNTg2LCJleHAiOjQ5MjI2MjE1ODZ9.8hhLEsjjvRRDL3oaS0aQnkReHbZxsuVEq2P1NhHymVc',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image18.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxOC5qcGVnIiwiaWF0IjoxNzY5MDIxNTk5LCJleHAiOjQ5MjI2MjE1OTl9._Rn7rr9rNUK4ZLs01p1f0f9CcImvSTsrMy_63Do6BI0',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image19.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UxOS5qcGVnIiwiaWF0IjoxNzY5MDIxNjE1LCJleHAiOjQ5MjI2MjE2MTV9.TIkWUucC4iHdd2wB0Et7cgfbMaqEG9wGBro0F_zwkLY',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image2.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UyLmpwZWciLCJpYXQiOjE3NjkwMjE2MzAsImV4cCI6NDkyMjYyMTYzMH0.itKFe-YzXYQIQ4DBolMScNgWZElMkg7edj2HoEG1TnA',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image3.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2UzLmpwZWciLCJpYXQiOjE3NjkwMjE2NDYsImV4cCI6NDkyMjYyMTY0Nn0.myxFyazoHIAId_thhz8edhaMijfZFk3zpIbvts6tTSk',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image4.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2U0LmpwZWciLCJpYXQiOjE3NjkwMjE2NTgsImV4cCI6NDkyMjYyMTY1OH0.up9VJ8CamLx3ChRGQMrlapzsFZ7qZJvtWsb_E83lexg',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image5.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2U1LmpwZWciLCJpYXQiOjE3NjkwMjE2NzAsImV4cCI6NDkyMjYyMTY3MH0.vVqoc3gxwenJZb8UIHJ8HHG6ublzfTKQmcIdFdFY950',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image6.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2U2LmpwZWciLCJpYXQiOjE3NjkwMjE3MTUsImV4cCI6NDkyMjYyMTcxNX0.cVcI9_hjJDNP8u84qIgJ8coS_cNcmmYlZ_4MduOTO1c',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image7.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2U3LmpwZWciLCJpYXQiOjE3NjkwMjE3MjcsImV4cCI6NDkyMjYyMTcyN30.nx0O8Fv50V6dTwjR4GEDs1L-caVCo3fWEFfrYAV3ovQ',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image8.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2U4LmpwZWciLCJpYXQiOjE3NjkwMjE3NDIsImV4cCI6NDkyMjYyMTc0Mn0.w0lyiVMMgPjp9mknwz6r2jefTt3_r82GnoeOwJXEL0g',
-  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/image9.jpeg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvaW1hZ2U5LmpwZWciLCJpYXQiOjE3NjkwMjE3NTMsImV4cCI6NDkyMjYyMTc1M30.hCmds6JG5ukVpJejfD3upIMTFgIp5XtpsvwjVKKXRFI'
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image1.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image10.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image11.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image12.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image14.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image15.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image16.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image17.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image18.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image19.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image2.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image3.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image4.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image5.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image6.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image7.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image8.jpeg',
+  'https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/image9.jpeg'
 ];
 
 const totalPairs = 8; // Resetting to 8 pairs for the full 4x4 experience
@@ -243,7 +243,7 @@ onUnmounted(() => clearInterval(timerInterval));
               <div class="absolute inset-0 bg-white/10 rounded-full blur-2xl animate-pulse group-hover:bg-white/20"></div>
               
               <img 
-                src="https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/sign/images/pngaaa.com-5330731__1_-removebg-preview-1-e1649640330290.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xNDk1NWI1Ny0wMmM5LTRhYmUtODhmZS04ZmNmODI0ODA1ZjAiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJpbWFnZXMvcG5nYWFhLmNvbS01MzMwNzMxX18xXy1yZW1vdmViZy1wcmV2aWV3LTEtZTE2NDk2NDAzMzAyOTAud2VicCIsImlhdCI6MTc2OTAyNzI0NSwiZXhwIjo0OTIyNjI3MjQ1fQ.mO8iTfqb8QbKdoOF3MyLuQeyhRC_XdBisHsbzX6VgrY" 
+                src="https://mfgxzbtrouajckgidpwg.supabase.co/storage/v1/object/public/images/pngaaa.com-5330731__1_-removebg-preview-1-e1649640330290.webp" 
                 alt="Treasure Chest" 
                 class="relative z-10 w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]"
                 :class="loadingReward ? '' : 'animate-float'"
